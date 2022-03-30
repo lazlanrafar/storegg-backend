@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
 const { baseUrl } = require("../config");
 
-mongoose.connect(baseUrl, {
-  useUnifiedTopology: true,
-  // useNewUrlParser: true,
-  useFindAndModify: true,
-  useCreateIndex: true,
-});
+mongoose.connect(baseUrl);
 
 const db = mongoose.connection;
 
