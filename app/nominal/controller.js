@@ -32,9 +32,7 @@ module.exports = {
   },
   actionCreate: async (req, res) => {
     try {
-      const { coinName, coinQuantity, price } = req.body;
-      const nominal = await Nominal({ coinName, coinQuantity, price });
-      await nominal.save();
+      await Nominal(req.body).save();
 
       req.flash("alertMessage", "Success Create Nominal");
       req.flash("alertStatus", "success");
@@ -46,41 +44,41 @@ module.exports = {
       res.redirect("/nominal");
     }
   },
-  //   viewEdit: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       const Nominal = await Nominal.findById(id);
-  //       res.render("admin/Nominal/edit", {
-  //         Nominal,
-  //       });
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/Nominal");
-  //     }
-  //   },
-  //   actionEdit: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       await Nominal.findByIdAndUpdate(id, req.body);
+  viewEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const nominal = await Nominal.findById(id);
+      res.render("admin/nominal/edit", {
+        nominal,
+      });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+    }
+  },
+  actionEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await Nominal.findByIdAndUpdate(id, req.body);
 
-  //       res.redirect("/Nominal");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/Nominal");
-  //     }
-  //   },
-  //   actionDelete: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       await Nominal.findByIdAndDelete(id);
+      res.redirect("/nominal");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+    }
+  },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await Nominal.findByIdAndDelete(id);
 
-  //       res.redirect("/Nominal");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/Nominal");
-  //     }
-  //   },
+      res.redirect("/nominal");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+    }
+  },
 };
