@@ -48,4 +48,10 @@ module.exports = {
       console.log(error);
     }
   },
+
+  actionLogout: (req, res) => {
+    req.session.destroy(() => {
+      res.redirect("/");
+    });
+  },
 };
