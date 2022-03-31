@@ -10,12 +10,13 @@ const {
 } = require("./controller");
 const { isLogin } = require("../middleware/auth");
 
-router.use(isLogin);
-router.get("/", index);
-router.get("/create", viewCreate);
-router.post("/create", actionCreate);
-router.get("/edit/:id", viewEdit);
-router.put("/edit/:id", actionEdit);
-router.delete("/delete/:id", actionDelete);
+router
+  .use(isLogin)
+  .get("/", index)
+  .get("/create", viewCreate)
+  .post("/create", actionCreate)
+  .get("/edit/:id", viewEdit)
+  .put("/edit/:id", actionEdit)
+  .delete("/delete/:id", actionDelete);
 
 module.exports = router;
