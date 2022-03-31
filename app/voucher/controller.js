@@ -95,9 +95,13 @@ module.exports = {
   viewEdit: async (req, res) => {
     try {
       const { id } = req.params;
-      const voucher = await Voucher.findById(id);
+      const voucher = await Voucher.findById(id)
+        .populate("category")
+        .populate("nominal");
       res.render("admin/voucher/edit", {
         voucher,
+        category: await Category.find(),
+        nominal: await Nominal.find(),
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -108,8 +112,16 @@ module.exports = {
   actionEdit: async (req, res) => {
     try {
       const { id } = req.params;
-      await Voucher.findByIdAndUpdate(id, req.body);
+      console.log("req body", req.body);
+      await Voucher.findByIdAndUpdate(id, {
+        name: req.body.name,
+        nominal: req.body.nominal,
+        category: req.body.category,
+        image: "",
+      });
 
+      req.flash("alertMessage", "Success Update voucher");
+      req.flash("alertStatus", "success");
       res.redirect("/voucher");
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
