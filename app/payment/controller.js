@@ -53,6 +53,7 @@ module.exports = {
       const payment = await Payment.findById(id);
       res.render("admin/payment/edit", {
         payment,
+        bank: await Bank.find(),
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
